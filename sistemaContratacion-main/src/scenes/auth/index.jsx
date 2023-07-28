@@ -155,13 +155,19 @@ function Auth() {
               </div>
               <div className="row">
                 <div className="col">
+                  <div style={{ display: 'flex', alignItems: 'center' }}>
                   <label htmlFor="email"><EmailIcon /></label>
+                    <span style={{ marginLeft: '-3px' }}>Email</span>
+                  </div>
                   <Components.Input type='email' placeholder='Email' />
                 </div>
               </div>
               <div className="row">
                 <div className="col">
+                  <div style={{ display: 'flex', alignItems: 'center' }}>
                   <label htmlFor="password"><KeyIcon /></label>
+                    <span style={{ marginLeft: '-3px' }}>Contraseña</span>
+                  </div>
                 
                   <Components.Input type='password' placeholder='Contraseña' />
                 </div>
@@ -186,13 +192,19 @@ function Auth() {
               <div className="authForm">
                 <div className="row">
                   <div className="col">
+                    <div style={{ display: 'flex', alignItems: 'center' }}>
                     <label htmlFor="email"><EmailIcon /></label>
+                      <span style={{ marginLeft: '-3px' }}>Email</span>
+                    </div>
                     <Components.Input type='email' placeholder='Email' ref={signinForm.email} />
                   </div>
                 </div>
                 <div className="row">
                   <div className="col">
+                    <div style={{ display: 'flex', alignItems: 'center' }}>
                     <label htmlFor="password"><KeyIcon /></label>
+                      <span style={{ marginLeft: '-3px' }}>Contraseña</span>
+                  </div>
                     <Components.Input type='password' placeholder='Contraseña' ref={signinForm.password} />
                     
                   </div>
@@ -260,13 +272,29 @@ function Auth() {
 
         <Components.OverlayContainer signinIn={signIn} style={{ background: "linear-gradient(180deg, #007B49 0%, #00A650 100%)" }}>
           <Components.Overlay signinIn={signIn}>
-            <Components.LeftOverlayPanel signinIn={signIn} style={{ background: "linear-gradient(180deg, #007B49 0%, #00A650 100%)", color: "white" }}>
-              <img src="https://upload.wikimedia.org/wikipedia/commons/2/27/Logo_ESPE.png" alt="ESPE" style={{ maxWidth: '300px', filter: 'drop-shadow(-10px 10px 5px rgba(0, 0, 0, 0.5))' }} />
+            <Components.LeftOverlayPanel signinIn={signIn} style={{ 
+               background: "linear-gradient(180deg, #007B49 0%, #00A650 100%)", 
+                color: "white",
+               marginLeft: "-44px" // Puedes ajustar el valor de marginLeft según tus necesidades
+            }}>
+               <img src="https://upload.wikimedia.org/wikipedia/commons/2/27/Logo_ESPE.png" alt="ESPE" style={{ 
+               maxWidth: '300px', 
+              filter: 'drop-shadow(-20px 10px 5px rgba(0, 0, 0, 0.6))'
+             }} />
             </Components.LeftOverlayPanel>
 
-            <Components.RightOverlayPanel signinIn={signIn} style={{ background: "linear-gradient(180deg, #007B49 0%, #00A650 100%)", color: "white" }}>
-              <img src="https://upload.wikimedia.org/wikipedia/commons/2/27/Logo_ESPE.png" alt="ESPE" style={{ maxWidth: '300px', filter: 'drop-shadow(-10px 10px 5px rgba(0, 0, 0, 0.5))' }} />
+
+            <Components.RightOverlayPanel signinIn={signIn} style={{ 
+              background: "linear-gradient(180deg, #007B49 0%, #00A650 100%)",
+              color: "white",
+              marginRight: "-44px" // Puedes ajustar el valor de marginRight según tus necesidades
+              }}>
+                <img src="https://upload.wikimedia.org/wikipedia/commons/2/27/Logo_ESPE.png" alt="ESPE" style={{ 
+                   maxWidth: '350px', 
+                  filter: 'drop-shadow(-20px 10px 5px rgba(0, 0, 0, 0.6))' 
+                }} />
             </Components.RightOverlayPanel>
+
           </Components.Overlay>
         </Components.OverlayContainer>
       </Components.Container>
