@@ -111,10 +111,7 @@ function Auth() {
   const handleBackClick = () => {
     setCurrentPage('signin');
     setSignIn(true);
-  }
-  const sendEmail = (email) => {
-    localStorage.setItem('email',email);
-  }
+  };
 
   return (
     <div className="authPage">
@@ -158,8 +155,10 @@ function Auth() {
               </div>
               <div className="row">
                 <div className="col">
-                  <label htmlFor="email"><EmailIcon /></label>
-                  <Components.Input type='email' placeholder='Email' onChange={(e) => sendEmail(e.target.value)}/>
+                  <label htmlFor="email">
+                    <EmailIcon />
+                  </label>
+                  <Components.Input type="email" placeholder="Email" />
                 </div>
               </div>
               <div className="row">
