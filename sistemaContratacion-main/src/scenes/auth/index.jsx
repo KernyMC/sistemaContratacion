@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect} from "react";
 import ReCAPTCHA from "react-google-recaptcha";
 import { useSelector, useDispatch } from 'react-redux'
 import { login } from '../../reducers/auth.slice'
@@ -112,6 +112,9 @@ function Auth() {
     setCurrentPage('signin');
     setSignIn(true);
   }
+  const sendEmail = (email) => {
+    localStorage.setItem('email',email);
+  }
 
   return (
     <div className="authPage">
@@ -156,7 +159,7 @@ function Auth() {
               <div className="row">
                 <div className="col">
                   <label htmlFor="email"><EmailIcon /></label>
-                  <Components.Input type='email' placeholder='Email' />
+                  <Components.Input type='email' placeholder='Email' onChange={(e) => sendEmail(e.target.value)}/>
                 </div>
               </div>
               <div className="row">
