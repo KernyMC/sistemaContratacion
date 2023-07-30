@@ -111,7 +111,7 @@ function Auth() {
   const handleBackClick = () => {
     setCurrentPage('signin');
     setSignIn(true);
-  };
+  }
 
   return (
     <div className="authPage">
@@ -155,10 +155,8 @@ function Auth() {
               </div>
               <div className="row">
                 <div className="col">
-                  <label htmlFor="email">
-                    <EmailIcon />
-                  </label>
-                  <Components.Input type="email" placeholder="Email" />
+                  <label htmlFor="email"><EmailIcon /></label>
+                  <Components.Input type='email' placeholder='Email' />
                 </div>
               </div>
               <div className="row">
