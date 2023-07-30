@@ -1,28 +1,42 @@
-import React, { useState } from 'react';
-import { Box, Button, Typography, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
+import React, { useState } from "react";
+import {
+  Box,
+  Button,
+  Typography,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+} from "@mui/material";
 import { Formik } from "formik";
 import * as yup from "yup";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Header from "../../components/Header";
-import { PDFDocument } from 'pdfjs-dist';
+import { PDFDocument } from "pdf-lib";
 
 const Formulario = () => {
   const isNonMobile = useMediaQuery("(min-width:600px)");
-  const [pdfPageCount, setPdfPageCount] = useState(0); // State to store the number of pages
+  const [pageCounts, setPageCounts] = useState({}); // Object to store page counts
 
   const handleFormSubmit = (values) => {
     console.log(values);
   };
 
-  const handlePdfFileChange = async (event) => {
+  const handleFileChange = (id) => async (event) => {
     const file = event.target.files[0];
-    if (file && file.type === 'application/pdf') {
+    if (file && file.type === "application/pdf") {
       const reader = new FileReader();
       reader.onload = async () => {
         const pdfData = new Uint8Array(reader.result);
         try {
           const pdf = await PDFDocument.load(pdfData);
-          setPdfPageCount(pdf.getPageCount());
+          const pageCount = pdf.getPages().length;
+          setPageCounts((prevCounts) => ({
+            ...prevCounts,
+            [id]: pageCount, // Update the page count for this id
+          }));
         } catch (error) {
           console.log("Error reading the PDF file:", error);
         }
@@ -81,12 +95,18 @@ const Formulario = () => {
                       </Typography>
                     </TableCell>
                     <TableCell>
-                      <input type="file" accept=".pdf" onChange={handlePdfFileChange} />
+                      <input
+                        type="file"
+                        accept=".pdf"
+                        onChange={handleFileChange("resume")}
+                      />
                     </TableCell>
                     <TableCell>
                       <Box sx={uploadBoxStyle}>
-                        {pdfPageCount > 0 && (
-                          <Typography variant="body2">{pdfPageCount} pages</Typography>
+                        {pageCounts["resume"] > 0 && (
+                          <Typography variant="body2">
+                            {pageCounts["resume"]} páginas
+                          </Typography>
                         )}
                       </Box>
                     </TableCell>
@@ -97,12 +117,18 @@ const Formulario = () => {
                       <Typography variant="body1">Copia de cédula:</Typography>
                     </TableCell>
                     <TableCell>
-                      <input type="file" accept=".pdf" onChange={handlePdfFileChange} />
+                      <input
+                        type="file"
+                        accept=".pdf"
+                        onChange={handleFileChange("cedula")}
+                      />
                     </TableCell>
                     <TableCell>
                       <Box sx={uploadBoxStyle}>
-                        {pdfPageCount > 0 && (
-                          <Typography variant="body2">{pdfPageCount} pages</Typography>
+                        {pageCounts["cedula"] > 0 && (
+                          <Typography variant="body2">
+                            {pageCounts["cedula"]} páginas
+                          </Typography>
                         )}
                       </Box>
                     </TableCell>
@@ -110,15 +136,23 @@ const Formulario = () => {
                   {/* Certificado de votación */}
                   <TableRow>
                     <TableCell>
-                      <Typography variant="body1">Certificado de votación:</Typography>
+                      <Typography variant="body1">
+                        Certificado de votación:
+                      </Typography>
                     </TableCell>
                     <TableCell>
-                      <input type="file" accept=".pdf" onChange={handlePdfFileChange} />
+                      <input
+                        type="file"
+                        accept=".pdf"
+                        onChange={handleFileChange("votingCert")}
+                      />
                     </TableCell>
                     <TableCell>
                       <Box sx={uploadBoxStyle}>
-                        {pdfPageCount > 0 && (
-                          <Typography variant="body2">{pdfPageCount} pages</Typography>
+                        {pageCounts["votingCert"] > 0 && (
+                          <Typography variant="body2">
+                            {pageCounts["votingCert"]} páginas
+                          </Typography>
                         )}
                       </Box>
                     </TableCell>
@@ -126,15 +160,23 @@ const Formulario = () => {
                   {/* Certificado de registro de título */}
                   <TableRow>
                     <TableCell>
-                      <Typography variant="body1">Certificado de registro de título:</Typography>
+                      <Typography variant="body1">
+                        Certificado de registro de título:
+                      </Typography>
                     </TableCell>
                     <TableCell>
-                      <input type="file" accept=".pdf" onChange={handlePdfFileChange} />
+                      <input
+                        type="file"
+                        accept=".pdf"
+                        onChange={handleFileChange("titleCert")}
+                      />
                     </TableCell>
                     <TableCell>
                       <Box sx={uploadBoxStyle}>
-                        {pdfPageCount > 0 && (
-                          <Typography variant="body2">{pdfPageCount} pages</Typography>
+                        {pageCounts["titleCert"] > 0 && (
+                          <Typography variant="body2">
+                            {pageCounts["titleCert"]} páginas
+                          </Typography>
                         )}
                       </Box>
                     </TableCell>
@@ -142,47 +184,76 @@ const Formulario = () => {
                   {/* Experiencia de docente */}
                   <TableRow>
                     <TableCell>
-                      <Typography variant="body1">Experiencia de docente:</Typography>
+                      <Typography variant="body1">
+                        Experiencia de docente:
+                      </Typography>
                     </TableCell>
                     <TableCell>
-                      <input type="file" accept=".pdf" onChange={handlePdfFileChange} />
+                      <input
+                        type="file"
+                        accept=".pdf"
+                        onChange={handleFileChange("teacherExp")}
+                      />
                     </TableCell>
                     <TableCell>
                       <Box sx={uploadBoxStyle}>
-                        {pdfPageCount > 0 && (
-                          <Typography variant="body2">{pdfPageCount} pages</Typography>
+                        {pageCounts["teacherExp"] > 0 && (
+                          <Typography variant="body2">
+                            {pageCounts["teacherExp"]} páginas
+                          </Typography>
                         )}
                       </Box>
                     </TableCell>
                   </TableRow>
-                  {/* Certificado de no tener impedimento de ejercer cargo público */}
+                  {/* Certificado de no tener impedimento al ejercer cargo público */}
                   <TableRow>
                     <TableCell>
-                      <Typography variant="body1">Certificado de no tener impedimento de ejercer cargo público:</Typography>
+                      <Typography variant="body1">
+                        Certificado de no tener impedimento al ejercer cargo
+                        público:
+                      </Typography>
                     </TableCell>
                     <TableCell>
-                      <input type="file" accept=".pdf" onChange={handlePdfFileChange} />
+                      <input
+                        type="file"
+                        accept=".pdf"
+                        onChange={handleFileChange("teacherPublicImpediment")}
+                      />
                     </TableCell>
                     <TableCell>
                       <Box sx={uploadBoxStyle}>
-                        {pdfPageCount > 0 && (
-                          <Typography variant="body2">{pdfPageCount} pages</Typography>
+                        {pageCounts["teacherPublicImpediment"] > 0 && (
+                          <Typography variant="body2">
+                            {pageCounts["teacherPublicImpediment"]} páginas
+                          </Typography>
                         )}
                       </Box>
                     </TableCell>
                   </TableRow>
-                  {/* Certificado de no tener responsabilidades administrativas */}
+                  {/* Certificado de no tener responsabilidades administrativas: */}
                   <TableRow>
                     <TableCell>
-                      <Typography variant="body1">Certificado de no tener responsabilidades administrativas:</Typography>
+                      <Typography variant="body1">
+                        Certificado de no tener responsabilidades
+                        administrativas:
+                      </Typography>
                     </TableCell>
                     <TableCell>
-                      <input type="file" accept=".pdf" onChange={handlePdfFileChange} />
+                      <input
+                        type="file"
+                        accept=".pdf"
+                        onChange={handleFileChange(
+                          "administrativeResponsabilities"
+                        )}
+                      />
                     </TableCell>
                     <TableCell>
                       <Box sx={uploadBoxStyle}>
-                        {pdfPageCount > 0 && (
-                          <Typography variant="body2">{pdfPageCount} pages</Typography>
+                        {pageCounts["administrativeResponsabilities"] > 0 && (
+                          <Typography variant="body2">
+                            {pageCounts["administrativeResponsabilities"]}{" "}
+                            páginas
+                          </Typography>
                         )}
                       </Box>
                     </TableCell>
@@ -190,15 +261,23 @@ const Formulario = () => {
                   {/* Experiencia profesional */}
                   <TableRow>
                     <TableCell>
-                      <Typography variant="body1">Experiencia profesional:</Typography>
+                      <Typography variant="body1">
+                        Experiencia profesional:
+                      </Typography>
                     </TableCell>
                     <TableCell>
-                      <input type="file" accept=".pdf" onChange={handlePdfFileChange} />
+                      <input
+                        type="file"
+                        accept=".pdf"
+                        onChange={handleFileChange("profesionalExp")}
+                      />
                     </TableCell>
                     <TableCell>
                       <Box sx={uploadBoxStyle}>
-                        {pdfPageCount > 0 && (
-                          <Typography variant="body2">{pdfPageCount} pages</Typography>
+                        {pageCounts["profesionalExp"] > 0 && (
+                          <Typography variant="body2">
+                            {pageCounts["profesionalExp"]} páginas
+                          </Typography>
                         )}
                       </Box>
                     </TableCell>
